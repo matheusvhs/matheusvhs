@@ -1,5 +1,7 @@
 ### Hi there 👋
 
+![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=matheusvhs&show_icons=true&theme=radical)
+
 <!--
 **matheusvhs/matheusvhs** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
