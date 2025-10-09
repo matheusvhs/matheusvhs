@@ -1,0 +1,50 @@
+name: Matheus Vieira Honório de Souza
+address: Rua Antônio Vilela do Couto, 201 | 37537-382 | Monte Verde | Santa Rita do Sapucaí | MG
+phone: (35) 98810-1900
+email: contato@linuxsmt.com
+personal_info: '24 anos | Brasileiro | Solteiro | CNH: B'
+social_links:
+  - name: LinkedIn
+    url: https://www.linkedin.com/in/matheusvhs/
+  - name: GitHub
+    url: https://github.com/matheusvhs
+objective: Busco oportunidade na área de Engenharia de Dados, onde possa aplicar meus conhecimentos em Python, SQL e PySpark, contribuindo para o crescimento da empresa e meu desenvolvimento profissional.
+education:
+  degree: Graduando em Engenharia de Software
+  institution: Instituto Nacional de Telecomunicações – INATEL
+  completion_date: previsão de conclusão em dezembro/2026
+languages:
+  - name: Inglês
+    level: Intermediário
+  - name: Espanhol
+    level: Básico
+skills:
+  - name: Programação
+    details: C++, Java, Python, SQL
+  - name: Git
+    details: Conhecimento intermediário
+  - name: Ferramentas de Dados
+    details: Databricks, PySpark, Jupyter Notebooks
+  - name: Embarcados
+    details: ESP32, ATmega328P, Arduino, Raspberry Pi Pico
+experience:
+  - title: Trainee - Engenharia de Dados
+    period: 10/2025 até atualmente – Santa Rita do Sapucaí (remoto)
+    description: Desenvolvimento de pipelines de dados utilizando PySpark e SQL, além de manutenção de dashboards em Databricks.
+
+  - title: Bolsista IC em Inatel (eHealth)
+    period: 04/2025 a 10/2025 – Santa Rita do Sapucaí (presencial)
+    description: Desenvolvimento de firmware e hardware para prevenção de quedas em ambiente hospitalar, ESP32.
+complementary_education:
+  - name: Fundamentos de Solidworks – Inatel Maker – 2022
+    expiration_date: infinity
+    verification_code: null
+  - name: Fundamentos de Fusion – Inatel Maker – 2025
+    expiration_date: infinity
+    verification_code: null
+  - name: Fundamentos de Fusion PCB – Inatel Maker – 2025
+    expiration_date: infinity
+    verification_code: null
+  - name: Databricks Fundamentals - Databricks - 2025
+    expiration_date: '2026-09'
+    verification_code: null
