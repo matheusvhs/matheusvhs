@@ -64,7 +64,13 @@ layout: default
             {% endif %}
             {% if course.verification_code %}
                 <br>
-                <small>Código de Verificação: {{ course.verification_code }}</small>
+                <small>Código de Verificação:
+                    <a 
+                    href="{{ course.verification_code.url }}" target="_blank" rel="noopener">
+                    {{ course.verification_code.text }}
+                </a>
+            </small>
+
             {% endif %}
         </li>
         {% endfor %}

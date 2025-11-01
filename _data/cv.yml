@@ -2,7 +2,7 @@ name: Matheus Vieira Honório de Souza
 address: Santa Rita do Sapucaí | MG
 phone: (35) 98810-1900
 email: contato@linuxsmt.com
-personal_info: '24 anos | Brasileiro | Solteiro | CNH: B'
+personal_info: '25 anos | CNH: B'
 social_links:
   - name: LinkedIn
     url: https://www.linkedin.com/in/matheusvhs/
@@ -38,4 +38,7 @@ experience:
 complementary_education:
   - name: Databricks Fundamentals - Databricks - 2025
     expiration_date: '2026-09'
-    verification_code: '[159933335](https://credentials.databricks.com/8b4a7cde-6f4e-4cda-8624-4e40a76e3651)'
+    verification_code:
+      text: "159933335"
+      url: "https://credentials.databricks.com/8b4a7cde-6f4e-4cda-8624-4e40a76e3651"
+
