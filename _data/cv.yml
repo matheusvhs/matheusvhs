@@ -28,11 +28,11 @@ skills:
   - name: Embarcados
     details: ESP32, ATmega328P, Arduino, Raspberry Pi Pico
 experience:
-  - title: Trainee - Engenharia de Dados
-    period: 10/2025 até atualmente – Santa Rita do Sapucaí (remoto)
+  - title: Consultor Databricks - Datasolutec
+    period: 10/2025 até atualmente – Santa Rita do Sapucaí (híbrido)
     description: Desenvolvimento de pipelines de dados utilizando PySpark e SQL, além de manutenção de dashboards em Databricks.
 
-  - title: Bolsista IC em Inatel (eHealth)
+  - title: Bolsista IC - Inatel (eHealth)
     period: 04/2025 a 10/2025 – Santa Rita do Sapucaí (presencial)
     description: Desenvolvimento de firmware e hardware para prevenção de quedas em ambiente hospitalar, ESP32.
 complementary_education:
@@ -47,7 +47,7 @@ complementary_education:
     verification_code:
       text: "BCBD64455517451B"
       url: "https://learn.microsoft.com/api/credentials/share/pt-br/Matheus-Souza/BCBD64455517451B?sharingId"
-      
+
   - name: Certified Generative AI Professional - Oracle - 2025
     expiration_date: '2027-10'
     verification_code:
