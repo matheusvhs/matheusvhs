@@ -36,9 +36,21 @@ experience:
     period: 04/2025 a 10/2025 – Santa Rita do Sapucaí (presencial)
     description: Desenvolvimento de firmware e hardware para prevenção de quedas em ambiente hospitalar, ESP32.
 complementary_education:
-  - name: Databricks Fundamentals - Databricks - 2025
-    expiration_date: '2026-09'
+  - name: Databricks Professional Data Engineer - Databricks - 2026
+    expiration_date: '2028-01'
     verification_code:
-      text: "159933335"
-      url: "https://credentials.databricks.com/8b4a7cde-6f4e-4cda-8624-4e40a76e3651"
+      text: "171388047"
+      url: "https://credentials.databricks.com/74cd9817-c39e-414c-bd9b-fb6ed82bf504"
+
+  - name: Fabric Analytics Engineer Associate - Microsoft - 2026
+    expiration_date: '2027-01'
+    verification_code:
+      text: "BCBD64455517451B"
+      url: "https://learn.microsoft.com/api/credentials/share/pt-br/Matheus-Souza/BCBD64455517451B?sharingId"
+      
+  - name: Certified Generative AI Professional - Oracle - 2025
+    expiration_date: '2027-10'
+    verification_code:
+      text: "6EF083BFEFB98A530A7FB5628A3CFFC4F5FD48C585578936E0F577ABCC7DACA3"
+      url: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=6EF083BFEFB98A530A7FB5628A3CFFC4F5FD48C585578936E0F577ABCC7DACA3"
 
