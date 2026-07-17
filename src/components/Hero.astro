@@ -1,0 +1,124 @@
+---
+import Icon from './Icon.astro';
+import { cv, pick, type Locale } from '../data/cv';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const linkedin = cv.social.find((s) => s.icon === 'linkedin');
+---
+
+<section class="relative overflow-hidden">
+  <!-- glow decorativo -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-32 left-1/2 h-[28rem] w-[48rem] -translate-x-1/2 rounded-full bg-brand-500/20 blur-3xl dark:bg-brand-500/10"
+  >
+  </div>
+
+  <div class="section relative flex flex-col items-start gap-6 pt-16 md:pt-24">
+    <p
+      class="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-3 py-1 text-xs font-medium text-muted animate-fade-up"
+    >
+      <span class="relative flex h-2 w-2">
+        <span
+          class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+        ></span>
+        <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+      </span>
+      {pick(cv.location, locale)}
+    </p>
+
+    <h1 class="name-morph font-display font-bold leading-[1.1] tracking-tight animate-fade-up">
+      <span class="name-brand text-4xl sm:text-5xl md:text-6xl"
+        ><span data-type>{cv.nameParts.lead}</span><span
+          data-type
+          class="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent"
+          >{cv.nameParts.accent}</span
+        ><span class="caret" aria-hidden="true"></span></span
+      >
+      <span class="name-full text-3xl sm:text-4xl md:text-5xl" aria-hidden="true"
+        ><span
+          >{cv.fullNameParts.lead}{' '}<span
+            class="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent"
+            >{cv.fullNameParts.accent}</span
+          ><span class="caret"></span></span
+        ></span
+      >
+    </h1>
+
+    <p class="font-display text-xl font-medium text-[rgb(var(--accent))] animate-fade-up md:text-2xl">
+      {pick(cv.title, locale)}
+    </p>
+
+    <p class="max-w-2xl text-lg leading-relaxed text-muted animate-fade-up">
+      {pick(cv.tagline, locale)}
+    </p>
+
+    <div class="flex flex-wrap items-center gap-3 animate-fade-up">
+      <a
+        href="#contact"
+        class="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand-600/20 transition hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
+      >
+        <Icon name="mail" class="h-4 w-4" />
+        {t('hero.cta.contact')}
+      </a>
+      {
+        linkedin && (
+          <a
+            href={linkedin.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-5 py-2.5 text-sm font-semibold transition hover:border-brand-400 hover:text-[rgb(var(--accent))] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
+          >
+            <Icon name="linkedin" class="h-4 w-4" />
+            {t('hero.cta.linkedin')}
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  // Digita "matheusvhs" ao carregar. O texto já vem no HTML: só é esvaziado
+  // se este script rodar — sem JS (ou com "reduzir movimento") o nome
+  // simplesmente aparece pronto.
+  (() => {
+    const brand = document.querySelector('.name-brand');
+    if (!brand) return;
+
+    const parts = brand.querySelectorAll('[data-type]');
+    if (!parts.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const texts = Array.from(parts, (p) => p.textContent);
+    parts.forEach((p) => (p.textContent = ''));
+    brand.classList.add('is-typing'); // cursor fica sólido enquanto digita
+
+    let part = 0;
+    let char = 0;
+
+    const tick = () => {
+      if (part >= parts.length) {
+        brand.classList.remove('is-typing'); // volta a piscar ao terminar
+        return;
+      }
+      const full = texts[part];
+      parts[part].textContent = full.slice(0, ++char);
+      if (char >= full.length) {
+        part++;
+        char = 0;
+      }
+      // ritmo irregular: digitação humana, não metrônomo
+      setTimeout(tick, 55 + Math.random() * 60);
+    };
+
+    setTimeout(tick, 400); // deixa o fade-up do hero acontecer primeiro
+  })();
+</script>

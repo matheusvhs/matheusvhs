@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+import { useTranslations } from '../i18n/ui';
+import type { Locale } from '../data/cv';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  aria-label={t('theme.toggle')}
+  title={t('theme.toggle')}
+  class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[rgb(var(--border))] text-muted transition hover:text-[rgb(var(--accent))] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
+>
+  <Icon name="sun" class="hidden h-4 w-4 dark:block" />
+  <Icon name="moon" class="h-4 w-4 dark:hidden" />
+</button>
+
+<script is:inline>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const root = document.documentElement;
+    root.classList.toggle('dark');
+    localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+  });
+</script>

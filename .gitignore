@@ -1,2 +1,25 @@
+# build output
+dist/
+
+# dependencies
+node_modules/
+
+# astro
+.astro/
+
+# jekyll (legacy)
 _site/
 .jekyll-cache/
+
+# environment
+.env
+.env.production
+
+# macOS
+.DS_Store
+
+# export do LinkedIn (dados pessoais — não versionar)
+Profile.pdf
+
+# logs
+npm-debug.log*

@@ -1,0 +1,25 @@
+---
+import { useTranslations } from '../i18n/ui';
+import type { Locale } from '../data/cv';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const isEn = locale === 'en';
+const targetHref = isEn ? '/' : '/en/';
+const targetLang = isEn ? 'pt-BR' : 'en';
+---
+
+<a
+  href={targetHref}
+  hreflang={targetLang}
+  lang={targetLang}
+  class="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[rgb(var(--border))] px-3 text-sm font-medium text-muted transition hover:text-[rgb(var(--accent))] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
+>
+  <span aria-hidden="true">{isEn ? '🇧🇷' : '🇬🇧'}</span>
+  <span>{t('lang.toggle')}</span>
+</a>

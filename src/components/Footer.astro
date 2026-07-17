@@ -1,0 +1,23 @@
+---
+import { cv, type Locale } from '../data/cv';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-[rgb(var(--border))]">
+  <div
+    class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 px-6 py-8 text-sm text-muted sm:flex-row"
+  >
+    <p>© {year} {cv.name}. {t('footer.rights')}</p>
+    <p class="font-display">
+      mth<span class="text-[rgb(var(--accent))]">.</span>eus
+    </p>
+  </div>
+</footer>

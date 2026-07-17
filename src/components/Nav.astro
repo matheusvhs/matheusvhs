@@ -1,0 +1,58 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import LangToggle from './LangToggle.astro';
+import { useTranslations } from '../i18n/ui';
+import type { Locale } from '../data/cv';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const links = [
+  { href: '#about', label: t('nav.about') },
+  { href: '#skills', label: t('nav.skills') },
+  { href: '#experience', label: t('nav.experience') },
+  { href: '#certifications', label: t('nav.certifications') },
+  { href: '#contact', label: t('nav.contact') },
+];
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg))]/80 backdrop-blur-md"
+>
+  <nav class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-3">
+    <a
+      href={locale === 'en' ? '/en/' : '/'}
+      aria-label="matheusvhs"
+      class="logo-morph font-display text-lg font-bold tracking-tight"
+      ><span aria-hidden="true"
+        >m<span class="lg-grow"><span>a</span></span>th<span class="lg-dot"
+          ><span class="lg-dot-x"><span class="lg-dot-y">.</span></span></span
+        >eus<span class="lg-grow lg-vhs"><span>vhs</span></span></span
+      ></a
+    >
+
+    <ul class="hidden items-center gap-6 md:flex">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-sm text-muted transition hover:text-[rgb(var(--accent))]"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-2">
+      <LangToggle locale={locale} />
+      <ThemeToggle locale={locale} />
+    </div>
+  </nav>
+</header>

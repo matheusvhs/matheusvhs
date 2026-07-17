@@ -1,0 +1,29 @@
+---
+// Composição única das seções — index.astro (pt-BR) e en/index.astro apenas variam o locale.
+import Nav from './Nav.astro';
+import Hero from './Hero.astro';
+import About from './About.astro';
+import Skills from './Skills.astro';
+import Experience from './Experience.astro';
+import Certifications from './Certifications.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+import type { Locale } from '../data/cv';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<Nav locale={locale} />
+<main id="main">
+  <Hero locale={locale} />
+  <About locale={locale} />
+  <Skills locale={locale} />
+  <Experience locale={locale} />
+  <Certifications locale={locale} />
+  <Contact locale={locale} />
+</main>
+<Footer locale={locale} />
