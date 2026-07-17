@@ -165,6 +165,10 @@ export const cv: CV = {
         pt: '10/2025 — 03/2026 · São Paulo (remoto)',
         en: 'Oct 2025 — Mar 2026 · São Paulo (remote)',
       },
+      description: {
+        pt: 'Desenvolvimento de agente de IA com RAG na plataforma Databricks e migração de runtime do Databricks em um cliente do setor bancário.',
+        en: 'Built an AI agent with RAG on the Databricks platform and migrated the Databricks runtime for a banking client.',
+      },
     },
     {
       role: {
