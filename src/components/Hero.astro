@@ -33,22 +33,29 @@ const linkedin = cv.social.find((s) => s.icon === 'linkedin');
       {pick(cv.location, locale)}
     </p>
 
-    <h1 class="name-morph font-display font-bold leading-[1.1] tracking-tight animate-fade-up">
-      <span class="name-brand text-4xl sm:text-5xl md:text-6xl"
-        ><span data-type>{cv.nameParts.lead}</span><span
-          data-type
-          class="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent"
-          >{cv.nameParts.accent}</span
-        ><span class="caret" aria-hidden="true"></span></span
-      >
-      <span class="name-full text-3xl sm:text-4xl md:text-5xl" aria-hidden="true"
-        ><span
+    <h1
+      class="name-morph font-display font-bold leading-[1.1] tracking-tight animate-fade-up"
+      tabindex="0"
+      role="button"
+      aria-label={cv.name}
+    >
+      <span class="name-line name-brand-line">
+        <span class="name-brand text-4xl sm:text-5xl md:text-6xl"
+          ><span data-type>{cv.nameParts.lead}</span><span
+            data-type
+            class="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent"
+            >{cv.nameParts.accent}</span
+          ><span class="caret" aria-hidden="true"></span></span
+        >
+      </span>
+      <span class="name-line name-full-line" aria-hidden="true">
+        <span class="name-full text-3xl sm:text-4xl md:text-5xl"
           >{cv.fullNameParts.lead}{' '}<span
             class="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent"
             >{cv.fullNameParts.accent}</span
           ><span class="caret"></span></span
-        ></span
-      >
+        >
+      </span>
     </h1>
 
     <p class="font-display text-xl font-medium text-[rgb(var(--accent))] animate-fade-up md:text-2xl">
@@ -120,5 +127,28 @@ const linkedin = cv.social.find((s) => s.icon === 'linkedin');
     };
 
     setTimeout(tick, 400); // deixa o fade-up do hero acontecer primeiro
+  })();
+
+  // Revelar o nome completo: hover cuida do mouse (via CSS); aqui tratamos
+  // toque e teclado, alternando .is-open no <h1>.
+  (() => {
+    const h1 = document.querySelector('.name-morph');
+    if (!h1) return;
+
+    const toggle = (e) => {
+      e.preventDefault();
+      h1.classList.toggle('is-open');
+    };
+
+    // só intercepta o toque onde não há hover (celular/tablet);
+    // no desktop o :hover do CSS já resolve e não queremos exigir clique
+    if (window.matchMedia('(hover: none)').matches) {
+      h1.addEventListener('click', toggle);
+    }
+
+    // teclado: Enter/Espaço alterna (h1 tem role=button e tabindex=0)
+    h1.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') toggle(e);
+    });
   })();
 </script>

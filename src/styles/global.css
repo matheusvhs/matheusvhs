@@ -145,54 +145,112 @@
     opacity: 1;
   }
 
-  /* Hover no <h1>: "matheusvhs" dissolve e revela o nome completo.
-     Só onde há cursor de verdade e largura suficiente para o nome caber em
-     uma linha — em telas menores/touch fica apenas a marca, sem reservar espaço. */
-  .name-full {
-    display: none;
+  /* <h1>: "matheusvhs" dissolve e revela "Matheus Vieira Honório de Souza".
+     São duas estratégias, cada uma correta para seu contexto:
+      - MOBILE/touch (base): as duas linhas se empilham e cada uma colapsa ou
+        expande a própria altura (grid-rows 0fr<->1fr). A caixa se auto-dimensiona,
+        o nome completo quebra em várias linhas, e o toque alterna via .is-open.
+      - DESKTOP (hover, ≥1024px): o nome completo vira overlay absoluto (uma
+        linha, fora do fluxo) — assim o alvo do hover é só a largura de
+        "matheusvhs" e não há salto de layout.
+     Sem JS, as duas linhas ficam visíveis (degradação graciosa). */
+  .name-morph {
+    display: grid;
+    justify-items: start;
+    cursor: pointer;
   }
 
+  .name-morph:focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 6px;
+    border-radius: 0.25rem;
+  }
+
+  .name-line {
+    display: grid;
+    min-width: 0;
+    max-width: 100%;
+    transition: grid-template-rows 0.45s ease;
+  }
+
+  .name-line > .name-brand,
+  .name-line > .name-full {
+    min-height: 0;
+    overflow: hidden;
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease,
+      filter 0.4s ease;
+  }
+
+  html.js .name-brand-line {
+    grid-template-rows: 1fr;
+  }
+
+  html.js .name-full-line {
+    grid-template-rows: 0fr;
+  }
+
+  html.js .name-full {
+    opacity: 0;
+    transform: translateY(0.22em);
+    filter: blur(7px);
+  }
+
+  html.js .name-morph.is-open .name-brand-line {
+    grid-template-rows: 0fr;
+  }
+
+  html.js .name-morph.is-open .name-full-line {
+    grid-template-rows: 1fr;
+  }
+
+  html.js .name-morph.is-open .name-brand {
+    opacity: 0;
+    transform: translateY(-0.22em);
+    filter: blur(7px);
+  }
+
+  html.js .name-morph.is-open .name-full {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+
+  /* DESKTOP: overlay absoluto, disparado por hover, alvo = largura da marca */
   @media (hover: hover) and (min-width: 1024px) {
-    /* A caixa do h1 mede apenas "matheusvhs" — é essa a área que dispara o efeito.
-       O nome completo fica fora do fluxo, então não amplia o alvo do hover
-       nem empurra o conteúdo abaixo. */
     .name-morph {
       position: relative;
       display: inline-block;
-      cursor: default;
     }
 
-    .name-morph > .name-brand,
-    .name-morph > .name-full {
+    .name-line {
+      display: block;
+      max-width: none;
+    }
+
+    .name-line > .name-brand,
+    .name-line > .name-full {
+      overflow: visible;
       white-space: nowrap;
-      transition:
-        opacity 0.45s ease,
-        transform 0.45s ease,
-        filter 0.45s ease;
     }
 
-    .name-full {
+    /* o overlay não entra no fluxo: não amplia o alvo nem empurra o conteúdo */
+    .name-full-line {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      /* nunca é alvo de hover: senão o nome revelado (bem mais largo)
-         voltaria a ampliar a área de disparo */
       pointer-events: none;
-      opacity: 0;
-      transform: translateY(0.28em) scale(0.98);
-      filter: blur(8px);
     }
 
-    .name-morph:hover > .name-brand {
+    html.js .name-morph:hover .name-brand {
       opacity: 0;
       transform: translateY(-0.28em) scale(0.98);
       filter: blur(8px);
     }
 
-    .name-morph:hover > .name-full {
+    html.js .name-morph:hover .name-full {
       opacity: 1;
       transform: none;
       filter: blur(0);
