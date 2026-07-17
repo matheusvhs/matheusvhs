@@ -1,0 +1,24 @@
+---
+// Alternativa mobile ao pipeline: "streams" de dados — cometas curtos e
+// horizontais cruzando a tela em alturas variadas, como pacotes zunindo.
+// Width-agnostic (sem recorte de viewBox), sem linha-base visível → clean
+// atrás do texto. Decorativo (aria-hidden); oculto em reduced-motion.
+const streams = [
+  { top: 16, w: 32, dur: 7.0, delay: 0.0 },
+  { top: 33, w: 26, dur: 9.0, delay: 2.6 },
+  { top: 50, w: 40, dur: 6.5, delay: 1.1 },
+  { top: 67, w: 28, dur: 8.5, delay: 3.4 },
+  { top: 84, w: 36, dur: 7.6, delay: 0.7 },
+];
+---
+
+<div class="hero-streams" aria-hidden="true">
+  {
+    streams.map((s) => (
+      <span
+        class="stream"
+        style={`top:${s.top}%; --w:${s.w}%; --dur:${s.dur}s; --delay:${s.delay}s`}
+      />
+    ))
+  }
+</div>

@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import PipelineFlow from './PipelineFlow.astro';
+import HeroStreams from './HeroStreams.astro';
 import { cv, pick, type Locale } from '../data/cv';
 import { useTranslations } from '../i18n/ui';
 
@@ -14,8 +15,9 @@ const linkedin = cv.social.find((s) => s.icon === 'linkedin');
 ---
 
 <section class="relative overflow-hidden">
-  <!-- pipeline animado ao fundo -->
+  <!-- fundo animado: pipeline (desktop) / streams (mobile) -->
   <PipelineFlow />
+  <HeroStreams />
 
   <!-- glow decorativo -->
   <div

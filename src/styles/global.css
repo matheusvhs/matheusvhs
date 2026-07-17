@@ -169,10 +169,70 @@
   }
 
   /* No celular o viewBox (2:1) é recortado numa tela estreita e alta, jogando
-     as colunas centrais do grafo bem atrás do texto — fica poluído. Some abaixo
-     de 768px; o glow do hero já cuida da atmosfera no mobile. */
+     as colunas centrais do grafo bem atrás do texto — fica poluído. Abaixo de
+     768px o pipeline dá lugar aos "streams" horizontais (HeroStreams). */
   @media (max-width: 767px) {
     .pipeline-flow {
+      display: none;
+    }
+  }
+
+  /* Streams de dados (mobile): cometas horizontais atravessando em alturas
+     variadas. Só a cabeça brilha; sem linha-base p/ não parecer sublinhado. */
+  .hero-streams {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0.55;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  @media (max-width: 767px) {
+    .hero-streams {
+      display: block;
+    }
+  }
+
+  .hero-streams .stream {
+    position: absolute;
+    left: 0;
+    width: var(--w);
+    height: 2px;
+    border-radius: 2px;
+    /* cauda transparente -> cabeça brilhante (viaja p/ a direita) */
+    background: linear-gradient(90deg, transparent, rgb(var(--accent)) 78%, #eaf2ff 100%);
+    filter: drop-shadow(0 0 6px rgb(var(--accent)));
+    opacity: 0;
+    animation: stream-move var(--dur) linear var(--delay) infinite;
+  }
+
+  @keyframes stream-move {
+    0% {
+      left: calc(-1 * var(--w));
+      opacity: 0;
+    }
+    12% {
+      opacity: 0.85;
+    }
+    88% {
+      opacity: 0.85;
+    }
+    100% {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+
+  html:not(.dark) .hero-streams {
+    opacity: 0.5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-streams {
       display: none;
     }
   }
