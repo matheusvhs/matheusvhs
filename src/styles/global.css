@@ -168,6 +168,15 @@
     opacity: 0.4;
   }
 
+  /* No celular o viewBox (2:1) é recortado numa tela estreita e alta, jogando
+     as colunas centrais do grafo bem atrás do texto — fica poluído. Some abaixo
+     de 768px; o glow do hero já cuida da atmosfera no mobile. */
+  @media (max-width: 767px) {
+    .pipeline-flow {
+      display: none;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     /* sem movimento: mantém só o grafo estático (nós + arestas) */
     .pf-packet,
