@@ -1,0 +1,43 @@
+---
+import Icon from './Icon.astro';
+import { cv, pick, type Locale } from '../data/cv';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section id="experience" class="section reveal">
+  <h2 class="section-title">{t('experience.title')}</h2>
+
+  <ol class="mt-10 space-y-8 border-l border-[rgb(var(--border))] pl-6 md:pl-8">
+    {
+      cv.experience.map((job) => (
+        <li class="relative">
+          <span class="absolute -left-[calc(1.5rem+7px)] top-1.5 inline-flex h-3.5 w-3.5 items-center justify-center rounded-full border-2 border-[rgb(var(--bg))] bg-brand-500 md:-left-[calc(2rem+7px)]" />
+          <div class="surface rounded-2xl p-6">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span class="inline-flex items-center gap-1.5 text-[rgb(var(--accent))]">
+                <Icon name="briefcase" class="h-4 w-4" />
+              </span>
+              <h3 class="font-display text-lg font-bold">{pick(job.role, locale)}</h3>
+              <span class="rounded-md bg-brand-500/10 px-2 py-0.5 text-sm font-medium text-[rgb(var(--accent))]">
+                {job.company}
+              </span>
+            </div>
+            <p class="mt-2 text-sm text-muted">{pick(job.period, locale)}</p>
+            {
+              job.description && (
+                <p class="mt-3 leading-relaxed text-muted">{pick(job.description, locale)}</p>
+              )
+            }
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>

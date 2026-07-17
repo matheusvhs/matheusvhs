@@ -1,0 +1,305 @@
+@import 'tailwindcss';
+
+/* Tema escuro por classe (aplicada em <html> pelo script inline do Base.astro) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter Variable', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+
+  --color-brand-50: #eef6ff;
+  --color-brand-100: #d9ebff;
+  --color-brand-200: #bcdcff;
+  --color-brand-300: #8ec6ff;
+  --color-brand-400: #59a5ff;
+  --color-brand-500: #3381fc;
+  --color-brand-600: #1f61f1;
+  --color-brand-700: #194bdd;
+  --color-brand-800: #1b3fb3;
+  --color-brand-900: #1c398d;
+  --color-brand-950: #152456;
+
+  --animate-fade-up: fade-up 0.6s ease-out both;
+
+  @keyframes fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --bg: 250 250 252;
+    --bg-elev: 255 255 255;
+    --text: 17 24 39;
+    --text-muted: 71 85 105;
+    --border: 226 232 240;
+    --accent: 31 97 241;
+  }
+
+  html.dark {
+    --bg: 8 11 22;
+    --bg-elev: 17 22 38;
+    --text: 226 232 240;
+    --text-muted: 148 163 184;
+    --border: 30 41 59;
+    --accent: 89 165 255;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background-color: rgb(var(--bg));
+    color: rgb(var(--text));
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      /* sem isto, animações infinitas (ex.: o cursor piscando) viram
+         tremulação frenética em vez de parar */
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  .surface {
+    background-color: rgb(var(--bg-elev));
+    border: 1px solid rgb(var(--border));
+  }
+
+  .text-muted {
+    color: rgb(var(--text-muted));
+  }
+
+  .section {
+    margin-inline: auto;
+    max-width: 64rem;
+    padding-inline: 1.5rem;
+    padding-block: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 7rem;
+    }
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.875rem;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  @media (min-width: 768px) {
+    .section-title {
+      font-size: 2.25rem;
+    }
+  }
+
+  /* Cursor de terminal piscando ao fim do nome */
+  .caret {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.82em;
+    margin-left: 0.1em;
+    background-color: rgb(var(--accent));
+    vertical-align: -0.04em;
+    /* step-end = liga/desliga seco, como um terminal de verdade (sem fade) */
+    animation: caret-blink 1.05s step-end infinite;
+  }
+
+  @keyframes caret-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  /* enquanto digita o cursor não pisca — igual a um terminal de verdade */
+  .name-brand.is-typing .caret {
+    animation: none;
+    opacity: 1;
+  }
+
+  /* Hover no <h1>: "matheusvhs" dissolve e revela o nome completo.
+     Só onde há cursor de verdade e largura suficiente para o nome caber em
+     uma linha — em telas menores/touch fica apenas a marca, sem reservar espaço. */
+  .name-full {
+    display: none;
+  }
+
+  @media (hover: hover) and (min-width: 1024px) {
+    /* A caixa do h1 mede apenas "matheusvhs" — é essa a área que dispara o efeito.
+       O nome completo fica fora do fluxo, então não amplia o alvo do hover
+       nem empurra o conteúdo abaixo. */
+    .name-morph {
+      position: relative;
+      display: inline-block;
+      cursor: default;
+    }
+
+    .name-morph > .name-brand,
+    .name-morph > .name-full {
+      white-space: nowrap;
+      transition:
+        opacity 0.45s ease,
+        transform 0.45s ease,
+        filter 0.45s ease;
+    }
+
+    .name-full {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      /* nunca é alvo de hover: senão o nome revelado (bem mais largo)
+         voltaria a ampliar a área de disparo */
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(0.28em) scale(0.98);
+      filter: blur(8px);
+    }
+
+    .name-morph:hover > .name-brand {
+      opacity: 0;
+      transform: translateY(-0.28em) scale(0.98);
+      filter: blur(8px);
+    }
+
+    .name-morph:hover > .name-full {
+      opacity: 1;
+      transform: none;
+      filter: blur(0);
+    }
+  }
+
+  /* Logo: "mth.eus" -> "matheusvhs" no hover.
+     O "a" cresce entre m e th, o ponto (já azul) voa num arco até o fim e vira
+     o "vhs", enquanto a lacuna que ele deixa se fecha. */
+  .logo-morph {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  /* peças que nascem com largura zero e crescem até a largura natural
+     (truque do grid 0fr -> 1fr: anima o equivalente a width:auto) */
+  .lg-grow {
+    display: inline-grid;
+    grid-template-columns: 0fr;
+    transition: grid-template-columns 0.45s ease;
+  }
+
+  .lg-grow > span {
+    overflow: hidden;
+    min-width: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .logo-morph:hover .lg-grow {
+    grid-template-columns: 1fr;
+  }
+
+  .logo-morph:hover .lg-grow > span {
+    opacity: 1;
+  }
+
+  .lg-vhs {
+    color: rgb(var(--accent));
+  }
+
+  /* o "vhs" só aparece quando o ponto aterrissa */
+  .logo-morph:hover .lg-vhs > span {
+    transition-delay: 0.26s;
+  }
+
+  /* o espaço do ponto colapsa; o glifo continua visível (sem overflow:hidden)
+     para poder voar para fora da caixa */
+  .lg-dot {
+    display: inline-grid;
+    grid-template-columns: 1fr;
+    transition: grid-template-columns 0.45s ease;
+    color: rgb(var(--accent));
+  }
+
+  .lg-dot > .lg-dot-x {
+    min-width: 0;
+  }
+
+  .logo-morph:hover .lg-dot {
+    grid-template-columns: 0fr;
+  }
+
+  /* arco = X linear (fora) + Y em salto (dentro) */
+  .lg-dot-x,
+  .lg-dot-y {
+    display: inline-block;
+  }
+
+  .lg-dot-x {
+    /* medido: o ponto voa largura("a") + largura("eus") até o início do "vhs" */
+    --dot-fly: 2.196em;
+    transition:
+      transform 0.5s linear,
+      opacity 0.18s ease 0.32s;
+  }
+
+  .logo-morph:hover .lg-dot-x {
+    transform: translateX(var(--dot-fly));
+    opacity: 0;
+  }
+
+  .logo-morph:hover .lg-dot-y {
+    animation: lg-hop 0.5s ease-out;
+  }
+
+  @keyframes lg-hop {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-0.95em);
+    }
+  }
+
+  /* Reveal on scroll — progressive enhancement: sem JS o conteúdo já é visível */
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+  }
+
+  html.js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
