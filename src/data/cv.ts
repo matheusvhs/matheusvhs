@@ -85,8 +85,8 @@ export const cv: CV = {
   phone: '(35) 98810-1900',
   email: 'contato@linuxsmt.com',
   objective: {
-    pt: 'Atuo em Engenharia de Dados aplicando Python, SQL e PySpark para construir e manter pipelines e dashboards confiáveis em Databricks e Snowflake, transformando dados em valor para o negócio.',
-    en: 'I work in Data Engineering applying Python, SQL and PySpark to build and maintain reliable pipelines and dashboards on Databricks and Snowflake, turning data into business value.',
+    pt: 'Atuo em Engenharia de Dados aplicando Python, SQL e PySpark para construir e manter pipelines de dados confiáveis em Databricks e Snowflake, transformando dados em valor para o negócio.',
+    en: 'I work in Data Engineering applying Python, SQL and PySpark to build and maintain reliable data pipelines on Databricks and Snowflake, turning data into business value.',
   },
   education: {
     degree: {
@@ -154,8 +154,8 @@ export const cv: CV = {
         en: 'Apr 2026 — present · São Paulo (remote)',
       },
       description: {
-        pt: 'Desenvolvimento de pipelines de dados com PySpark e SQL, além de manutenção de dashboards em Databricks.',
-        en: 'Building data pipelines with PySpark and SQL, plus maintaining dashboards on Databricks.',
+        pt: 'Desenvolvimento de soluções de dados ponta a ponta para clientes nos ecossistemas Databricks e Snowflake — da ingestão ao processamento e modelagem — adequando a arquitetura às necessidades de cada projeto.',
+        en: 'End-to-end data solutions for clients across the Databricks and Snowflake ecosystems — from ingestion to processing and modeling — tailoring the architecture to each project’s needs.',
       },
     },
     {
