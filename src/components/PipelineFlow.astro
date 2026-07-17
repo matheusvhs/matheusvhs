@@ -1,0 +1,104 @@
+---
+// Fundo ambiente do hero: um DAG de pipeline com "pacotes" de dados fluindo
+// pelas arestas (animateMotion) e um anel que pulsa no nó quando o pacote chega
+// (SMIL begin="pX.repeatEvent"). Puramente decorativo → aria-hidden.
+// Cores vêm de --accent (segue o tema). Oculto em prefers-reduced-motion.
+
+// Nós do grafo (viewBox 1200x600), organizados em camadas da esquerda p/ direita.
+const nodes = [
+  { x: 150, y: 160 }, // A
+  { x: 150, y: 430 }, // B
+  { x: 430, y: 100 }, // C
+  { x: 430, y: 300 }, // D
+  { x: 430, y: 500 }, // E
+  { x: 740, y: 210 }, // F
+  { x: 740, y: 450 }, // G
+  { x: 1040, y: 180 }, // H
+  { x: 1040, y: 400 }, // I
+];
+
+// Arestas como curvas suaves (bezier horizontal).
+const edges = [
+  { id: 'e1', d: 'M150 160 C290 160 290 100 430 100' },
+  { id: 'e2', d: 'M150 160 C290 160 290 300 430 300' },
+  { id: 'e3', d: 'M150 430 C290 430 290 300 430 300' },
+  { id: 'e4', d: 'M150 430 C290 430 290 500 430 500' },
+  { id: 'e5', d: 'M430 100 C585 100 585 210 740 210' },
+  { id: 'e7', d: 'M430 300 C585 300 585 450 740 450' },
+  { id: 'e8', d: 'M430 500 C585 500 585 450 740 450' },
+  { id: 'e9', d: 'M740 210 C890 210 890 180 1040 180' },
+  { id: 'e10', d: 'M740 450 C890 450 890 180 1040 180' },
+  { id: 'e11', d: 'M740 450 C890 450 890 400 1040 400' },
+];
+
+// Pacotes: aresta percorrida, ritmo e atraso escalonados p/ um fluxo orgânico,
+// e o nó (índice) que pulsa quando o pacote chega.
+const packets = [
+  { id: 'p1', edge: 'e1', dur: 3.0, begin: 0.0, node: 2 },
+  { id: 'p2', edge: 'e4', dur: 3.4, begin: 1.2, node: 4 },
+  { id: 'p3', edge: 'e5', dur: 2.8, begin: 2.0, node: 5 },
+  { id: 'p4', edge: 'e8', dur: 3.2, begin: 0.8, node: 6 },
+  { id: 'p5', edge: 'e9', dur: 3.0, begin: 2.6, node: 7 },
+  { id: 'p6', edge: 'e11', dur: 3.6, begin: 1.6, node: 8 },
+];
+---
+
+<div class="pipeline-flow" aria-hidden="true">
+  <svg
+    viewBox="0 0 1200 600"
+    preserveAspectRatio="xMidYMid slice"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    fill="none"
+  >
+    <!-- arestas -->
+    {edges.map((e) => <path id={e.id} class="pf-edge" d={e.d} />)}
+
+    <!-- nós -->
+    {
+      nodes.map((n) => (
+        <rect class="pf-node" x={n.x - 7} y={n.y - 7} width="14" height="14" rx="3.5" />
+      ))
+    }
+
+    <!-- anéis de pulso (disparam na chegada do pacote) -->
+    {
+      packets.map((p) => {
+        const n = nodes[p.node];
+        return (
+          <circle class="pf-pulse" cx={n.x} cy={n.y} r="8" opacity="0">
+            <animate
+              attributeName="r"
+              begin={`${p.id}.repeatEvent`}
+              dur="0.9s"
+              from="8"
+              to="30"
+              fill="freeze"
+              restart="whenNotActive"
+            />
+            <animate
+              attributeName="opacity"
+              begin={`${p.id}.repeatEvent`}
+              dur="0.9s"
+              from="0.7"
+              to="0"
+              fill="freeze"
+              restart="whenNotActive"
+            />
+          </circle>
+        );
+      })
+    }
+
+    <!-- pacotes de dados -->
+    {
+      packets.map((p) => (
+        <circle class="pf-packet" r="4">
+          <animateMotion id={p.id} dur={`${p.dur}s`} begin={`${p.begin}s`} repeatCount="indefinite">
+            <mpath xlink:href={`#${p.edge}`} href={`#${p.edge}`} />
+          </animateMotion>
+        </circle>
+      ))
+    }
+  </svg>
+</div>
